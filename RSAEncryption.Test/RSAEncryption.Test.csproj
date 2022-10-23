@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RSAEncryption\RSAEncryption.csproj" />
+    <ProjectReference Include="..\src\RSAEncryption.csproj" />
   </ItemGroup>
 
 </Project>
