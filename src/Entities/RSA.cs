@@ -18,12 +18,13 @@ public class RSA : IEncryptor, IDecryptor
         _alphabet = Array.Empty<char>();
     }
 
+    public IEnumerable<string> Result => _text;
+
     public void Decrypt(IEnumerable<string> data, PrivateKey privateKey)
     {
         ArgumentNullException.ThrowIfNull(privateKey);
         ArgumentNullException.ThrowIfNull(data);
-
-        _text.Clear();
+        data = data.ToList();
 
         BigInteger decryptedCharacter;
         _logger?.Log("Decryption in process...\n");
@@ -34,7 +35,7 @@ public class RSA : IEncryptor, IDecryptor
 
             int alphabetPosition = Convert.ToInt32(decryptedCharacter.ToString());
 
-            _text.Add(_alphabet.GetValue(alphabetPosition).ToString());
+            _text.Add(_alphabet.GetValue(alphabetPosition % _alphabet.Length).ToString());
         }
 
         _logger?.Log("Decryption finished\n");
@@ -93,7 +94,4 @@ public class RSA : IEncryptor, IDecryptor
             .Distinct()
             .ToArray();
     }
-
-    public IEnumerable<string> GetText()
-        => _text;
 }
